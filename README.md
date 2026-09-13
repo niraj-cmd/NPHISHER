@@ -1,34 +1,72 @@
-# 🌐 Exact Site Snapshot & Local Host
+# 🌐 NPHISHER — Web Snapshot & Local Testing Tool
 
-> A Python-based utility that uses **Playwright** to capture a rendered website, save its HTML snapshot and a full-page screenshot, and serve the captured page locally for testing and visual verification.
+<p align="center">
+
+**Automated Website Rendering • HTML Snapshot • Screenshot Verification • Localhost Hosting**
+
+</p>
+
+<p align="center">
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge\&logo=python)
-![Playwright](https://img.shields.io/badge/Playwright-Automation-green?style=for-the-badge)
+![Playwright](https://img.shields.io/badge/Playwright-Chromium-green?style=for-the-badge)
 ![Localhost](https://img.shields.io/badge/Server-Localhost-orange?style=for-the-badge)
+
+</p>
+
+---
+
+## 📌 About
+
+**NPHISHER** is a Python-based web snapshot utility built with **Playwright**.
+
+It launches a headless Chromium browser, loads an authorized target website, renders the page, triggers lazy-loaded content, saves the resulting HTML, creates a full-page screenshot, and finally hosts the generated snapshot locally.
+
+The main implementation is:
+
+👉 [NPHISHER.py](https://github.com/niraj-cmd/site-cloner/blob/main/NPHISHER.py)
+
+> **Important:** Despite the filename, this project should only be used for authorized website testing, development, UI research, CTF/lab environments, and archiving. Do not use it to impersonate services or collect credentials.
 
 ---
 
 ## ✨ Features
 
-* 🚀 Automated Chromium browser rendering
-* 🌐 Accepts `HTTP` and `HTTPS` target URLs
-* 📄 Captures the final rendered HTML
-* 📸 Generates a full-page screenshot for verification
+* 🚀 Automated Chromium rendering
+* 🌐 Supports HTTP and HTTPS URLs
+* 📄 Saves the rendered HTML snapshot
+* 📸 Creates a full-page screenshot
 * 🔄 Scrolls the page to trigger lazy-loaded content
 * 📁 Automatically creates the output directory
-* 🖥️ Starts a local HTTP server on port `8080`
-* ⚡ Uses asynchronous Playwright APIs
-* 🔍 Useful for local UI testing and authorized website archiving
+* 🖥️ Built-in localhost HTTP server
+* ⚡ Asynchronous Playwright automation
+* 🔍 Useful for UI testing and visual verification
+
+---
+
+## 📂 Project Structure
+
+```text
+site-cloner/
+│
+├── NPHISHER.py
+├── requirements.txt
+├── README.md
+│
+└── cloned_exact_site/
+    ├── index.html
+    └── screenshot.png
+```
+
+The `cloned_exact_site` directory is created automatically when the script runs.
 
 ---
 
 ## 🧰 Requirements
 
-Make sure you have:
-
-* **Python 3.10+**
-* Internet access for Playwright to load the target website
-* A website that you are authorized to snapshot
+* Python **3.10+**
+* Playwright
+* Chromium browser installed through Playwright
 
 ---
 
@@ -37,17 +75,17 @@ Make sure you have:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-cd YOUR_REPOSITORY
+git clone https://github.com/niraj-cmd/site-cloner.git
+cd site-cloner
 ```
 
-### 2. Install dependencies
+### 2. Install Python dependencies
 
 ```bash
-pip install playwright
+pip install -r requirements.txt
 ```
 
-### 3. Install Playwright Chromium
+### 3. Install Chromium
 
 ```bash
 playwright install chromium
@@ -55,15 +93,15 @@ playwright install chromium
 
 ---
 
-## ▶️ Usage
+## ▶️ Running NPHISHER
 
-Run the script:
+Start the script:
 
 ```bash
-python main.py
+python NPHISHER.py
 ```
 
-You will be prompted to enter a URL:
+You will be prompted for a URL:
 
 ```text
 === 100% VISUAL ACCURACY SITE COPIER & LOCAL HOST ===
@@ -71,27 +109,43 @@ You will be prompted to enter a URL:
 Enter the full website URL to clone:
 ```
 
-Example:
+Enter an authorized URL, for example:
 
 ```text
 https://example.com
 ```
 
-The tool will then:
+The program then:
 
-1. Launch Chromium in headless mode.
-2. Navigate to the supplied website.
-3. Wait for network activity to settle.
-4. Scroll through the page to trigger lazy-loaded elements.
-5. Capture the rendered HTML.
-6. Save a full-page screenshot.
-7. Start a local web server.
+```text
+Target URL
+    │
+    ▼
+Playwright / Chromium
+    │
+    ▼
+Render webpage
+    │
+    ▼
+Trigger lazy-loaded content
+    │
+    ├───────────────┐
+    ▼               ▼
+index.html     screenshot.png
+    │               │
+    └───────┬───────┘
+            ▼
+      Local HTTP Server
+            │
+            ▼
+   http://localhost:8080
+```
 
 ---
 
-## 📁 Output
+## 📁 Generated Files
 
-After execution, the following directory is created:
+After the script finishes:
 
 ```text
 cloned_exact_site/
@@ -101,17 +155,17 @@ cloned_exact_site/
 
 ### `index.html`
 
-Contains the rendered HTML snapshot captured by Playwright.
+Contains the HTML generated from the rendered page.
 
 ### `screenshot.png`
 
-A full-page screenshot of the rendered target page that can be used for visual comparison.
+Contains a full-page screenshot captured by Playwright for visual verification.
 
 ---
 
-## 🖥️ Local Hosting
+## 🖥️ Localhost
 
-Once the snapshot has been created, the built-in HTTP server starts automatically.
+NPHISHER automatically starts a local HTTP server on port `8080`.
 
 Open:
 
@@ -119,37 +173,36 @@ Open:
 http://localhost:8080
 ```
 
-You should see the generated `index.html` served from the local directory.
+The terminal will display:
+
+```text
+[Server] Active! Open your browser and go to:
+http://localhost:8080
+```
 
 Stop the server with:
 
 ```text
-Ctrl+C
+Ctrl + C
 ```
 
 ---
 
-## 🔧 Configuration
+## ⚙️ Configuration
 
-The default server port is:
-
-```python
-port=8080
-```
-
-You can change it in:
+The default port is:
 
 ```python
 start_local_host(port=8080)
 ```
 
-For example:
+To use another port:
 
 ```python
 start_local_host(port=3000)
 ```
 
-Then access:
+Then visit:
 
 ```text
 http://localhost:3000
@@ -157,106 +210,150 @@ http://localhost:3000
 
 ---
 
-## 🧠 How It Works
+## 🔍 How the Script Works
+
+### 1. URL Validation
+
+The program checks that the supplied URL starts with:
 
 ```text
-        Target Website
-              │
-              ▼
-       Playwright / Chromium
-              │
-              ▼
-      Render webpage completely
-              │
-              ▼
-       Trigger lazy loading
-              │
-        ┌─────┴─────┐
-        ▼           ▼
-    index.html   screenshot.png
-        │
-        └─────┬─────┘
-              ▼
-       Local HTTP Server
-              │
-              ▼
-    http://localhost:8080
+http://
 ```
+
+or:
+
+```text
+https://
+```
+
+### 2. Chromium Launch
+
+Playwright starts Chromium in headless mode.
+
+### 3. Page Rendering
+
+The target page is loaded using:
+
+```python
+wait_until="networkidle"
+```
+
+with a 60-second timeout.
+
+### 4. Lazy-Load Trigger
+
+The script scrolls to the bottom of the page and waits briefly before returning to the top.
+
+This can cause lazy-loaded page elements to render.
+
+### 5. HTML Capture
+
+The final rendered DOM is retrieved using Playwright and written to:
+
+```text
+cloned_exact_site/index.html
+```
+
+### 6. Screenshot
+
+A full-page screenshot is generated:
+
+```text
+cloned_exact_site/screenshot.png
+```
+
+### 7. Local Hosting
+
+Python's built-in HTTP server serves the generated directory.
 
 ---
 
 ## ⚠️ Important Limitations
 
-This project captures the **rendered HTML**, but it is not necessarily a completely self-contained offline copy of a website.
+This project captures the **rendered HTML**, not necessarily a completely self-contained offline copy.
 
-For example, the captured HTML may still reference:
+External resources may still be referenced from their original locations, including:
 
-* External CSS
-* JavaScript files
+* CSS
+* JavaScript
 * Images
 * Fonts
-* API endpoints
+* APIs
 * CDN resources
 
-Therefore, some websites may not look or behave exactly the same when opened offline or through localhost.
+Therefore, some websites may not function correctly when hosted locally.
 
-Dynamic functionality that depends on the original server may also stop working.
-
----
-
-## 🛡️ Responsible Use
-
-Use this tool only on websites and systems that you own or have explicit permission to test, archive, or reproduce.
-
-Do **not** use website snapshots to impersonate legitimate services, collect credentials, deceive users, or conduct unauthorized phishing or credential-harvesting activities.
-
-For security research, use intentionally vulnerable applications or your own test environment.
-
-Recommended targets include:
-
-```text
-http://localhost
-http://127.0.0.1
-Authorized development/staging environments
-CTF/lab applications
-Your own websites
-```
+Server-side functionality is also not copied by this script.
 
 ---
 
-## 🧪 Example Test
+## 🧪 Safe Testing
 
-For a simple local test server:
+For testing, use:
 
-```bash
-python -m http.server 9000
-```
+* Your own website
+* Local development applications
+* Authorized staging environments
+* CTF/lab applications
+* Intentionally vulnerable training applications
 
-Then run this project and provide:
+For example:
 
 ```text
 http://localhost:9000
 ```
 
-The generated snapshot will be placed inside:
+You can create a simple local test server with:
+
+```bash
+python -m http.server 9000
+```
+
+Then run:
+
+```bash
+python NPHISHER.py
+```
+
+and enter:
 
 ```text
-cloned_exact_site/
+http://localhost:9000
 ```
+
+---
+
+## 🛡️ Responsible Use
+
+This tool is intended for **authorized security research, development, testing, education, and website archiving**.
+
+Do not use it to:
+
+* Impersonate legitimate services
+* Deploy phishing pages
+* Collect usernames or passwords
+* Harvest authentication information
+* Deceive users
+* Bypass authentication
+* Reproduce websites without authorization
+
+Only snapshot websites that you own or have explicit permission to test.
 
 ---
 
 ## 🐛 Troubleshooting
 
-### Playwright is not installed
+### `ModuleNotFoundError: No module named 'playwright'`
 
 Run:
 
 ```bash
-pip install playwright
+pip install -r requirements.txt
 ```
 
-Then:
+### Chromium is missing
+
+Run:
 
 ```bash
 playwright install chromium
@@ -270,43 +367,62 @@ Change:
 start_local_host(port=8080)
 ```
 
-to another port:
+to:
 
 ```python
 start_local_host(port=8081)
 ```
 
-### Website fails to load
+### Website does not load
 
-Check that:
+Check:
 
-* The URL starts with `http://` or `https://`
-* Your internet connection is working
-* The target website is accessible
-* The website does not require authentication
-* The page does not depend heavily on server-side functionality
+* URL is valid
+* Internet connection is available
+* Website is reachable
+* Target permits access
+* Page does not require unavailable authentication/session state
 
 ### Some assets are missing
 
-The current implementation saves the HTML snapshot but does not download every external resource locally. Consequently, externally hosted assets may remain dependent on their original URLs.
+The current implementation saves the rendered HTML but does not download every external resource into the output directory. External assets may therefore continue to depend on the original website.
 
 ---
 
 ## 📜 License
 
-Use an appropriate open-source license for your repository, such as MIT, if you intend to distribute the project publicly.
+If you distribute this project publicly, consider adding an appropriate open-source license such as MIT.
+
+---
+
+## 👨‍💻 Author
+
+**Niraj Ashtaputre**
+
+GitHub:
+
+https://github.com/niraj-cmd
+
+Repository:
+
+https://github.com/niraj-cmd/site-cloner
 
 ---
 
 ## ⭐ Project Purpose
 
-This project is intended for:
+NPHISHER is designed as a learning and research project for:
 
-* 🔬 Web development testing
-* 🎨 UI/visual comparison
-* 🧪 Authorized security labs
-* 📚 Web automation learning
-* 🗃️ Authorized website archiving
-* 🖥️ Local rendering experiments
+```text
+Web Automation
+       │
+       ├── Playwright
+       ├── Chromium
+       ├── HTML Rendering
+       ├── Screenshot Testing
+       └── Local Web Hosting
+```
 
-**Built for learning, testing, and authorized research.**
+**Built for authorized testing, learning, and security research.**
+
+---
